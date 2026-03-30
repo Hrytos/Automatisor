@@ -485,8 +485,7 @@ nav {
 /* ── Section Dividers ─────────────────────────────────────────── */
 .section-rule {
   border: none;
-  /* border-top: 1px solid var(--rule); */
-  border-top: none;
+  border-top: 1px solid var(--rule);
   margin: 0;
 }
 
