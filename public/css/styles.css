@@ -249,6 +249,10 @@ nav {
   border-bottom: none;
 }
 
+.nav-drawer .drawer-login {
+  color: var(--ink);
+}
+
 .nav-drawer .drawer-cta {
   color: var(--orange);
   font-weight: 500;
@@ -1061,7 +1065,7 @@ footer {
   }
 
   .nav-actions {
-    display: none;
+    display: flex;
   }
 
   .nav-hamburger {
