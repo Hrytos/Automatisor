@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AutomatiSOR — Warehouse Automation Advisor. Find out what your facility is actually ready to automate with a free 5-minute diagnostic.">
+  <title>AutomatiSOR — Warehouse Automation Advisor</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────────── -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-logo">
+    <img src="/images/Logo_Dark.png" alt="Hrytos" class="nav-logo-img">
+    <div class="nav-logo-stack">
+      <span class="nav-logo-text">Automati<span>SOR</span></span>
+      <span class="nav-logo-byline">by Hrytos</span>
+    </div>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="#">Technology guide</a></li>
+    <!-- Enable benchmarks later <li><a href="#">Benchmarks</a></li> -->
+    <li><a href="#">Community</a></li>
+    <li><a href="https://www.hrytos.com/">For Solution Providers</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <a href="#" class="nav-login">Log in</a>
+    <button class="nav-cta" type="button">Take the diagnostic</button>
+  </div>
+
+  <!-- Hamburger (mobile) -->
+  <button class="nav-hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- Mobile navigation drawer -->
+<nav id="nav-drawer" class="nav-drawer" aria-label="Mobile navigation">
+  <a href="#">Technology guide</a>
+  <!-- <a href="#">Benchmarks</a> -->
+  <li><a href="#">Community</a></li>
+  <a href="https://www.hrytos.com/">For Solution Providers</a>
+  <button class="drawer-cta" type="button">Take the diagnostic — free</button>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────── -->
+<section class="hero-wrapper">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Independent warehouse automation advisor</div>
+      <h1>Find out what your facility <em>actually</em> needs to automate</h1>
+      <p class="hero-body">A 5-minute diagnostic built for warehouse operators. Get a neutral assessment of your operations, a technology category recommendation, and a shortlist of vendors matched to your specific facility profile.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">
+          Start the diagnostic
+          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <!-- Enable this when ready
+        <button class="btn-ghost" type="button">Browse technology guide first</button>
+        -->
+      </div>
+      <div class="hero-trust">No vendor affiliation &nbsp;·&nbsp; No sales calls until you want them &nbsp;·&nbsp; Free to complete</div>
+    </div>
+
+    <!-- Diagnostic preview card -->
+    <div class="diag-card" role="region" aria-label="Diagnostic preview">
+      <div class="diag-card-header">Readiness diagnostic — preview</div>
+
+      <div class="diag-question">
+        <div class="diag-q-label">What is your facility size?</div>
+        <div class="diag-options" role="group" aria-label="Facility size options">
+          <div class="diag-opt" role="button" tabindex="0">Under 100K sq ft</div>
+          <div class="diag-opt sel" role="button" tabindex="0">100K – 300K sq ft</div>
+          <div class="diag-opt" role="button" tabindex="0">300K – 600K sq ft</div>
+          <div class="diag-opt" role="button" tabindex="0">600K – 1.5M sq ft</div>
+        </div>
+      </div>
+
+      <div class="diag-question">
+        <div class="diag-q-label">Your primary vertical</div>
+        <div class="diag-options" role="group" aria-label="Vertical options">
+          <div class="diag-opt sel" role="button" tabindex="0">3PL / public warehousing</div>
+          <div class="diag-opt" role="button" tabindex="0">E-commerce / D2C</div>
+          <div class="diag-opt" role="button" tabindex="0">In-line manufacturing</div>
+          <div class="diag-opt" role="button" tabindex="0">Retail distribution</div>
+          <div class="diag-opt" role="button" tabindex="0">Food &amp; beverage</div>
+        </div>
+      </div>
+
+      <div class="diag-question">
+        <div class="diag-q-label">Biggest pain right now — rank your top priority</div>
+        <div class="diag-options" role="group" aria-label="Pain priority options">
+          <div class="diag-opt" role="button" tabindex="0">Labour cost &amp; shortage</div>
+          <div class="diag-opt sel" role="button" tabindex="0">Throughput ceiling</div>
+          <div class="diag-opt" role="button" tabindex="0">Space utilisation</div>
+          <div class="diag-opt" role="button" tabindex="0">Accuracy &amp; errors</div>
+        </div>
+      </div>
+
+      <div class="diag-progress" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" aria-label="Diagnostic progress">
+        <div class="diag-progress-fill" id="progbar"></div>
+      </div>
+      <div class="diag-footer">
+        <span class="diag-step-label">Question 3 of 15 · ~4 min remaining</span>
+        <button class="diag-next" type="button">Continue</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-rule">
+
+<!-- ── Neutral credentials bar ────────────────────────────── -->
+<div class="neutral-bar" role="list" aria-label="Platform commitments">
+  <div class="neutral-item" role="listitem"><div class="neutral-dot"></div>No vendor affiliation</div>
+  <div class="neutral-item" role="listitem"><div class="neutral-dot"></div>Not a sales funnel for a specific technology or vendor</div>
+  <div class="neutral-item" role="listitem"><div class="neutral-dot"></div>Benchmarks built from operator data, not vendor case studies</div>
+  <div class="neutral-item" role="listitem"><div class="neutral-dot"></div>You control who contacts you</div>
+</div>
+
+<hr class="section-rule">
+
+<!-- ── The Problem ─────────────────────────────────────────── -->
+<section class="section" aria-labelledby="problem-heading">
+  <div class="section-label">The problem</div>
+
+  <div class="problem-header">
+    <div>
+      <h2 id="problem-heading">The information you need doesn't exist in a <em>neutral</em> form</h2>
+    </div>
+    <div class="section-intro">Every readiness tool, every ROI calculator, every vendor comparison you've found online was built by someone trying to sell you something. We built this because operators deserve a starting point that isn't a lead form in disguise.</div>
+  </div>
+
+  <div class="pain-grid">
+    <div class="pain-cell">
+      <div class="pain-tag">Vendor overload</div>
+      <div class="pain-quote">"There were 50 AMR vendors at MODEX. I don't have the bandwidth to evaluate all of them."</div>
+      <div class="pain-body">The automation market has fragmented faster than warehouse operators can track it. Without a neutral filter, shortlisting defaults to whoever had the biggest booth & coolest demos.</div>
+    </div>
+    <div class="pain-cell">
+      <div class="pain-tag">Untrusted ROI data</div>
+      <div class="pain-quote">"Every vendor shows me a payback under 18 months. My CFO stopped trusting those numbers."</div>
+      <div class="pain-body">Vendor-supplied ROI projections are discounted immediately by finance teams. The business case stalls because there's no third-party benchmark to build from.</div>
+    </div>
+    <div class="pain-cell">
+      <div class="pain-tag">Complexity surprise</div>
+      <div class="pain-quote">"We bought the robots. Six months in, we found out our WMS couldn't talk to them."</div>
+      <div class="pain-body">Integration requirements, minimum order volumes, ceiling height constraints — these eliminate most vendors for most facilities. Warehouses find out too late.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-rule">
+
+<!-- ── How It Works ─────────────────────────────────────────── -->
+<section class="section" aria-labelledby="how-heading">
+  <div class="section-label">How it works</div>
+  <h2 id="how-heading">From pain to best-fit automation options in <em>five hours</em></h2>
+
+  <div class="how-grid">
+    <div>
+      <div class="how-step-num" aria-hidden="true">01</div>
+      <div class="how-step-title">Complete the readiness diagnostic</div>
+      <div class="how-step-body">23 operational questions about your operations — size, ceiling height, WMS stack, order volume, labour cost, pain priorities. Takes 5 minutes. No account required.</div>
+    </div>
+    <div>
+      <div class="how-step-num" aria-hidden="true">02</div>
+      <div class="how-step-title">Receive your assessment and technology map</div>
+      <div class="how-step-body">Immediate output: an operations assessment across 5 dimensions, a technology category recommendation, and 3 benchmark data points relevant to your facility profile. Yours to keep.</div>
+    </div>
+    <div>
+      <div class="how-step-num" aria-hidden="true">03</div>
+      <div class="how-step-title">Get a matched vendor shortlist</div>
+      <div class="how-step-body">If you choose to proceed, we run your profile through our pre-qualified & vetted vendor pool and send you 3 best-fit vendors with explicit fit rationale. You decide who to meet & when — no sales calls unless you ask for them.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-rule">
+
+<!-- ── What You Receive ─────────────────────────────────────── -->
+<section class="section" aria-labelledby="output-heading">
+  <div class="section-label">What you receive</div>
+  <h2 id="output-heading">Specific to your facility. <em>Not generic.</em></h2>
+
+  <div class="output-grid">
+    <div class="output-card featured">
+      <div class="output-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="6" stroke="#f25c19" stroke-width="1.2"/>
+          <path d="M8 5v3l2 2" stroke="#f25c19" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="output-title">Readiness score — 5 dimensions</div>
+      <div class="output-body">Labour pressure · operational volume · tech stack maturity · budget fit · timeline urgency. Each dimension scored separately so you understand your own profile before you talk to anyone.</div>
+    </div>
+
+    <div class="output-card">
+      <div class="output-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="2" y="2" width="12" height="12" rx="2" stroke="#f25c19" stroke-width="1.2"/>
+          <path d="M5 8h6M5 5h3M5 11h4" stroke="#f25c19" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="output-title">Technology category recommendation</div>
+      <div class="output-body">AMR? AS/RS? WMS-first? The category that fits your specific facility profile — with the reasoning shown, not just the answer. Includes what eliminates categories for your situation.</div>
+    </div>
+
+    <!-- Enable this when ready
+    <div class="output-card">
+      <div class="output-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M8 3v10" stroke="#0f6e56" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="output-title">Benchmark data — your profile</div>
+      <div class="output-body">Median payback periods, cost-per-pick ranges, and implementation timelines for facilities matching yours. Built from operator data — not vendor marketing materials.</div>
+    </div>
+  -->
+
+    <div class="output-card">
+      <div class="output-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="5" cy="8" r="2.5" stroke="#f25c19" stroke-width="1.2"/>
+          <circle cx="11" cy="5" r="2.5" stroke="#f25c19" stroke-width="1.2"/>
+          <circle cx="11" cy="11" r="2.5" stroke="#f25c19" stroke-width="1.2"/>
+          <path d="M7.5 7L9 5.8M7.5 9L9 10.2" stroke="#f25c19" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="output-title">Matched vendor shortlist</div>
+      <div class="output-body">3–5 vendors filtered against your facility specs, WMS stack, and budget. For each: one paragraph explaining the fit, what to ask them, and what typically eliminates them at your scale.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Benchmark Strip ──────────────────────────────────────── -->
+<div class="benchmark-strip" role="region" aria-label="Industry benchmark data">
+  <div class="benchmark-inner">
+    <div class="benchmark-intro-text">Benchmark data from mid-market US warehouses, 100K–1.5M sq ft. Updated quarterly.</div>
+
+    <div class="benchmark-stat">
+      <div class="benchmark-num">22<span>mo</span></div>
+      <div class="benchmark-label">Median AMR payback for 3PLs above 200K sq ft</div>
+    </div>
+
+    <div class="benchmark-stat">
+      <div class="benchmark-num">$<span>0.38</span></div>
+      <div class="benchmark-label">Median cost per pick with GTP systems at 50K+ daily orders</div>
+    </div>
+
+    <div class="benchmark-stat">
+      <div class="benchmark-num">76<span>%</span></div>
+      <div class="benchmark-label">Of facilities cite WMS integration as their biggest implementation surprise</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-rule">
+
+<!-- ── Final CTA ────────────────────────────────────────────── -->
+<section class="cta-section" aria-labelledby="cta-heading">
+  <div class="cta-left">
+    <h2 id="cta-heading">Start with what your facility is <em>actually</em> ready for</h2>
+    <p>The diagnostic takes 5 minutes. Your results are immediate. You stay in control of what happens next — no vendor receives your details until you say so.</p>
+    <a href="#" class="btn-primary">
+      Take the diagnostic — free
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;" aria-hidden="true">
+        <path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="cta-card">
+    <div class="cta-card-title">What you get — immediately, free</div>
+    <div class="cta-card-sub">No account. No credit card. No sales call.</div>
+
+    <ul class="cta-checklist">
+      <li>
+        <div class="check" aria-hidden="true">
+          <svg viewBox="0 0 9 9" fill="none">
+            <path d="M1.5 4.5l2 2 4-4" stroke="#f25c19" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        Readiness score across 5 operational dimensions
+      </li>
+      <li>
+        <div class="check" aria-hidden="true">
+          <svg viewBox="0 0 9 9" fill="none">
+            <path d="M1.5 4.5l2 2 4-4" stroke="#f25c19" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        Technology category recommendation with reasoning
+      </li>
+      <li>
+        <div class="check" aria-hidden="true">
+          <svg viewBox="0 0 9 9" fill="none">
+            <path d="M1.5 4.5l2 2 4-4" stroke="#f25c19" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        Matched vendor shortlist (when you ask for it)
+      </li>
+    </ul>
+
+    <button class="btn-primary cta-btn-full" type="button">Start the diagnostic</button>
+    <div class="cta-free-note">Your contact details are never shared without your explicit consent.</div>
+  </div>
+</section>
+
+<!-- ── Footer ───────────────────────────────────────────────── -->
+<footer role="contentinfo">
+  <div class="footer-inner">
+
+    <!-- Top row -->
+    <div class="footer-top">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+        <div class="footer-logo-group">
+          <img src="/images/Logo_Light.png" alt="Hrytos" class="footer-logo-img">
+          <span class="footer-logo-name">hrytos</span>
+        </div>
+        <p class="footer-tagline">Decision Intelligence for Industrial Automation</p>
+        <div class="footer-socials">
+          <a href="https://www.linkedin.com/company/hrytos" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="2" y="9" width="4" height="12" rx="1" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+          </a>
+          <a href="https://x.com/hrytos" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="X / Twitter">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 4l16 16M4 20L20 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </a>
+          <a href="https://www.youtube.com/@hrytos" target="_blank" rel="noopener noreferrer" class="footer-social-icon" aria-label="YouTube">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="2" y="5" width="20" height="14" rx="4" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M10 9l5 3-5 3V9z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: columns + subscribe -->
+      <div class="footer-right">
+
+        <!-- Nav columns -->
+        <div class="footer-columns">
+          <div class="footer-col">
+            <h4 class="footer-col-title">By Industry</h4>
+            <ul class="footer-col-links">
+              <li><a href="#">Warehousing</a></li>
+              <li><a href="#">Manufacturing</a></li>
+              <li><a href="#">Fulfillment Centers</a></li>
+              <li><a href="#">Distribution Centers</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Resources</h4>
+            <ul class="footer-col-links">
+              <li><a href="https://hrytos.substack.com" target="_blank" rel="noopener noreferrer">Blog</a></li>
+              <li><a href="#">University</a></li>
+              <li><a href="#">Community</a></li>
+              <li><a href="#">Events &amp; Webinars</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Company</h4>
+            <ul class="footer-col-links">
+              <li><a href="#">About</a></li>
+              <li><a href="#">Team</a></li>
+              <li><a href="https://wellfound.com/company/hrytos" target="_blank" rel="noopener noreferrer">Careers</a></li>
+              <li><a href="#">Newsroom</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Subscribe -->
+        <div class="footer-subscribe">
+          <h4 class="footer-col-title">Subscribe</h4>
+          <p class="footer-subscribe-body">Join our newsletter to stay up to date on latest news</p>
+          <input type="email" placeholder="Enter your email" class="footer-email-input" aria-label="Email address">
+          <button class="footer-subscribe-btn" type="button">Subscribe</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="footer-divider"></div>
+
+    <!-- Bottom -->
+    <p class="footer-copyright">&copy; 2026 Hrytos, Inc. All rights reserved.</p>
+
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="/js/main.js"></script>
+
+</body>
+</html>
