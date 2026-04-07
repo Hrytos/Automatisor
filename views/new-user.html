@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New User Diagnostic - AutomatiSOR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <nav role="navigation" aria-label="Main navigation">
+      <div class="nav-logo">
+        <img src="/images/Logo_Dark.png" alt="Hrytos" class="nav-logo-img" />
+        <div class="nav-logo-stack">
+          <span class="nav-logo-text">Automati<span>SOR</span></span>
+          <span class="nav-logo-byline">by Hrytos</span>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a href="/" class="nav-login">Back to home</a>
+      </div>
+    </nav>
+
+    <main class="signup-page">
+      <section class="signup-shell">
+        <h1 id="signupPageTitle">Request a diagnostic report</h1>
+        <div id="signupIntro" class="signup-intro-copy">
+          <h2>What you'll get from the report</h2>
+          <p>
+            The report summarises operations and challenges at your facility
+            using factual, real-world data and categorises it across 5 key
+            dimensions - Operational Profile, Operational Performance, Labor
+            &amp; Workforce, Safety &amp; Compliance, Technology &amp;
+            Infrastructure. Each dimension includes a brief snapshot of
+            observations and identifies the top 3 risks.
+          </p>
+          <h2>What's next?</h2>
+          <p>
+            You can further customise the report to your facility by editing
+            answers and by answering more questions under the Questionnaire
+            section on the sidebar. Once you have made all the changes you want,
+            you can regenerate the report to view the updated summary. You can
+            regenerate the report as many times as you need to. Want to
+            understand this further and see recommendations? Chat with us.
+          </p>
+        </div>
+
+        <form id="newUserForm" novalidate>
+          <div id="sectionToggleBar" class="section-toggle-bar">
+            <button id="backToRequiredBtn" type="button" class="section-toggle-btn is-active">
+              About
+            </button>
+            <button id="moreQuestionsBtn" type="button" class="section-toggle-btn">
+              Answer more questions
+            </button>
+          </div>
+
+          <div id="requiredPanel">
+            <div class="signup-section">
+              <h2>About You <span class="req-pill">Required</span></h2>
+              <div class="signup-grid">
+                <input
+                  id="first_name"
+                  placeholder="First name (e.g. John)"
+                  required
+                />
+                <input
+                  id="last_name"
+                  placeholder="Last name (e.g. Smith)"
+                  required
+                />
+                <input
+                  id="company_name"
+                  placeholder="Company name (e.g. Acme Logistics)"
+                  required
+                />
+                <input
+                  id="job_title"
+                  placeholder="Job title (e.g. Operations Manager)"
+                  required
+                />
+                <input
+                  id="company_email"
+                  type="email"
+                  placeholder="Company email (e.g. john@company.com)"
+                  required
+                />
+                <input
+                  id="domain"
+                  placeholder="Domain (e.g. www.company.com)"
+                  required
+                />
+              </div>
+              <p id="aboutYouError" class="form-error hidden"></p>
+            </div>
+
+            <div class="signup-section">
+              <h2>About the Site <span class="req-pill">Required</span></h2>
+              <div id="mapAddressSection" class="map-address-section hidden">
+                <p class="map-hint">
+                  Use your address details to open the location in Google Maps.
+                </p>
+                <a
+                  id="mapsPreviewLink"
+                  class="maps-preview-link disabled"
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-disabled="true"
+                  >Open in Google Maps</a
+                >
+              </div>
+              <div class="signup-grid">
+                <input
+                  id="street"
+                  placeholder="Street (e.g. 123 Industrial Way)"
+                  required
+                />
+                <input id="city" placeholder="City (e.g. Atlanta)" required />
+                <input id="state" placeholder="State (e.g. GA)" />
+                <input id="zip" placeholder="ZIP (e.g. 30301)" />
+                <select id="country" class="custom-native">
+                  <option value="US" selected>USA</option>
+                  <option value="Canada">Canada</option>
+                </select>
+                <input
+                  id="site_size_sqft"
+                  type="number"
+                  placeholder="Site size in sq ft (e.g. 320000)"
+                  required
+                />
+                <select id="typical_aisle_width" class="custom-native">
+                  <option value="">Typical aisle width</option>
+                  <option value="under_7ft">
+                    Under 7 ft (very narrow aisle)
+                  </option>
+                  <option value="7_10ft">7 - 10 ft (narrow aisle)</option>
+                  <option value="10_15ft">10 - 15 ft (standard aisle)</option>
+                  <option value="15_20ft">15 - 20 ft (wide aisle)</option>
+                  <option value="over_20ft">
+                    Over 20 ft (very wide/open floor)
+                  </option>
+                </select>
+                <select
+                  id="typical_one_way_travel_distance"
+                  class="custom-native"
+                >
+                  <option value="">
+                    Typical one way travel dist. for heavy material movement
+                  </option>
+                  <option value="under_100ft">Under 100 ft</option>
+                  <option value="100_250ft">100 - 250 ft</option>
+                  <option value="250_500ft">250 - 500 ft</option>
+                  <option value="500_1000ft">500 - 1,000 ft</option>
+                  <option value="over_1000ft">Over 1,000 ft</option>
+                </select>
+                <input
+                  id="nature_of_operations"
+                  class="span-2"
+                  placeholder="Describe nature of operations"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div id="optionalPanel" class="hidden">
+            <div class="signup-section">
+              <h2>
+                Answer More Questions
+                <span class="optional-pill">Optional</span>
+              </h2>
+              <div id="questionnaireContainer" class="compact-questions"></div>
+            </div>
+          </div>
+
+          <p id="formError" class="form-error hidden"></p>
+
+          <div class="signup-footer">
+            <p class="signup-note">
+              Answering additional questions will further tailor the report to your facility. Are you sure you have answered all that you want to?
+            </p>
+            <button id="submitBtn" type="submit" class="btn-primary btn-submit-wide" disabled>
+              Request a diagnostic report
+            </button>
+          </div>
+        </form>
+
+        <div id="successPanel" class="success-panel hidden">
+          <h2>Congratulations!</h2>
+          <p>Your report will be sent to your mail in 24 hours</p>
+        </div>
+      </section>
+    </main>
+
+    <footer role="contentinfo" class="site-footer-alt">
+      <div class="footer-inner-alt">
+        <div class="footer-top-alt">
+          <div>
+            <div class="footer-brand-name-alt">
+              <img src="/images/Logo_Light.png" alt="Hrytos" class="footer-brand-img-alt" />
+            </div>
+            <div class="footer-tagline-alt">Decision Intelligence for Industrial Automation</div>
+            <div class="footer-platform-links-alt">
+              <a href="/new-user" class="btn-nav-outline-alt">AutomatiSOR -></a>
+              <a href="https://pipegen-assistant.hrytos.com" class="btn-nav-outline-alt">PipeGen Assistant -></a>
+            </div>
+          </div>
+          <div class="footer-links-grid-alt">
+            <div>
+              <div class="footer-col-title-alt">By industry</div>
+              <ul class="footer-col-links-alt">
+                <li><a href="#">Warehousing</a></li>
+                <li><a href="#">Manufacturing</a></li>
+                <li><a href="#">Fulfilment centers</a></li>
+                <li><a href="#">Distribution centers</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="footer-col-title-alt">By process</div>
+              <ul class="footer-col-links-alt">
+                <li><a href="#">Inbound receiving</a></li>
+                <li><a href="#">Outbound staging</a></li>
+                <li><a href="#">Line-side replenishment</a></li>
+                <li><a href="#">Cross-docking</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="footer-col-title-alt">Resources</div>
+              <ul class="footer-col-links-alt">
+                <li><a href="https://hrytos.substack.com" target="_blank" rel="noopener noreferrer">Blog</a></li>
+                <li><a href="#">University</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Events &amp; webinars</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="footer-col-title-alt">Company</div>
+              <ul class="footer-col-links-alt">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Team</a></li>
+                <li><a href="https://wellfound.com/company/hrytos" target="_blank" rel="noopener noreferrer">Careers</a></li>
+                <li><a href="#">Newsroom</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="footer-col-title-alt">Social</div>
+              <ul class="footer-col-links-alt">
+                <li><a href="https://linkedin.com/company/hrytos" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                <li><a href="https://www.youtube.com/@hrytos" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+                <li><a href="https://instagram.com/hrytos" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                <li><a href="https://x.com/hrytos" target="_blank" rel="noopener noreferrer">X</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom-alt">
+          <div class="footer-copy-alt">&copy; 2026 Hrytos, Inc. All rights reserved.</div>
+          <div class="footer-legal-alt">
+            <a href="#">Privacy policy</a>
+            <a href="#">Terms of service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/js/new-user.js"></script>
+  </body>
+</html>
