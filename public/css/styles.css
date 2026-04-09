@@ -44,42 +44,58 @@
   line-height: 1.6;
 }
 
-.section-toggle-bar {
+.step-indicator {
   display: flex;
   justify-content: center;
+  align-items: baseline;
+  gap: 6px;
+  margin: 6px auto 18px;
+  padding: 10px 16px;
+  border: 1px solid rgba(242, 92, 25, 0.26);
+  border-radius: 999px;
+  font-size: 13px;
+  line-height: 1.2;
+  color: #334155;
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    rgba(242, 92, 25, 0.12),
+    rgba(242, 92, 25, 0.06)
+  );
+  box-shadow: 0 6px 16px rgba(2, 5, 63, 0.08);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.step-indicator strong {
+  color: #02053f;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.wizard-nav {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
-  flex-wrap: wrap;
   gap: 10px;
-  margin: 4px 0 14px;
 }
 
-.section-toggle-btn {
-  min-width: 160px;
-  padding: 12px 18px;
-  border-radius: 18px;
-  border: 1px solid transparent;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
+.wizard-nav #prevStepBtn {
+  margin-right: auto;
 }
 
-.section-toggle-btn:hover {
-  transform: none;
-}
-
-.section-toggle-btn.is-active {
-  border-color: #f25c19;
-  color: #f25c19;
-  background: #e7ded9;
-}
-
-.section-toggle-btn:not(.is-active) {
+.wizard-nav .btn-secondary {
+  min-width: 120px;
+  border: 1px solid rgba(242, 92, 25, 0.45);
   background: #f25c19;
-  color: #ffffff;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 999px;
+}
+
+.wizard-nav .btn-secondary:hover {
+  opacity: 0.94;
 }
 
 .signup-section {
@@ -1849,8 +1865,14 @@ footer {
     min-height: 46px;
   }
 
-  .section-toggle-bar {
+  .wizard-nav {
     flex-direction: column;
+    align-items: stretch;
+  }
+
+  .wizard-nav .btn-secondary {
+    width: 100%;
+    min-height: 46px;
   }
 
   .q-inline-label {
@@ -1895,6 +1917,12 @@ footer {
 
   .custom-select-menu {
     max-height: 50vh;
+  }
+
+  .step-indicator {
+    font-size: 12px;
+    gap: 4px;
+    padding: 7px 10px;
   }
 
   .footer-links-grid-alt {

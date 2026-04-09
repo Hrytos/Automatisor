@@ -6,24 +6,23 @@
   const aboutYouErrorEl = document.getElementById("aboutYouError");
   const successPanel = document.getElementById("successPanel");
   const submitBtn = document.getElementById("submitBtn");
-  const moreQuestionsBtn = document.getElementById("moreQuestionsBtn");
-  const backToRequiredBtn = document.getElementById("backToRequiredBtn");
-  const requiredPanel = document.getElementById("requiredPanel");
-  const optionalPanel = document.getElementById("optionalPanel");
+  const signupFooter = document.querySelector(".signup-footer");
+  const nextStepBtn = document.getElementById("nextStepBtn");
+  const prevStepBtn = document.getElementById("prevStepBtn");
+  const aboutYouPanel = document.getElementById("aboutYouPanel");
+  const aboutWarehousePanel = document.getElementById("aboutWarehousePanel");
+  const answerMorePanel = document.getElementById("answerMorePanel");
+  const stepCurrentEl = document.getElementById("stepCurrent");
+  const stepTitleEl = document.getElementById("stepTitle");
   const qContainer = document.getElementById("questionnaireContainer");
   const signupIntro = document.getElementById("signupIntro");
   const signupPageTitle = document.getElementById("signupPageTitle");
   const mapsPreviewLink = document.getElementById("mapsPreviewLink");
-  const sectionToggleBar = document.getElementById("sectionToggleBar");
+  const stepTitles = ["About You", "About the Warehouse", "Answer More Questions"];
+  let currentStep = 0;
 
   const answers = {};
   const openDropdowns = new Set();
-
-  function setActiveSection(active) {
-    if (!moreQuestionsBtn || !backToRequiredBtn) return;
-    moreQuestionsBtn.classList.toggle("is-active", active === "optional");
-    backToRequiredBtn.classList.toggle("is-active", active === "required");
-  }
 
   const questions = [
     {
@@ -453,8 +452,15 @@
   function isValidWorkEmail() {
     const email = val("company_email").toLowerCase();
     if (!email.includes("@")) return false;
-    const emailDomain = email.split("@")[1];
-    return Boolean(emailDomain && !disallowedPersonalEmailDomains.has(emailDomain));
+    if (/\s/.test(email)) return false;
+    const parts = email.split("@");
+    if (parts.length !== 2) return false;
+    const [localPart, emailDomainRaw] = parts;
+    const emailDomain = (emailDomainRaw || "").trim();
+    if (!localPart) return false;
+    if (!emailDomain || !emailDomain.includes(".")) return false;
+    if (emailDomain.startsWith(".") || emailDomain.endsWith(".")) return false;
+    return !disallowedPersonalEmailDomains.has(emailDomain);
   }
 
   function allRequiredValid() {
@@ -463,6 +469,47 @@
 
   function syncSubmitState() {
     submitBtn.disabled = !allRequiredValid();
+  }
+
+  function renderStep() {
+    if (aboutYouPanel) aboutYouPanel.classList.toggle("hidden", currentStep !== 0);
+    if (aboutWarehousePanel)
+      aboutWarehousePanel.classList.toggle("hidden", currentStep !== 1);
+    if (answerMorePanel) answerMorePanel.classList.toggle("hidden", currentStep !== 2);
+
+    if (stepCurrentEl) stepCurrentEl.textContent = String(currentStep + 1);
+    if (stepTitleEl) stepTitleEl.textContent = stepTitles[currentStep];
+
+    if (prevStepBtn) prevStepBtn.classList.toggle("hidden", currentStep === 0);
+    if (nextStepBtn) nextStepBtn.classList.toggle("hidden", currentStep === 2);
+    if (submitBtn) submitBtn.classList.toggle("hidden", currentStep !== 2);
+    if (signupFooter) signupFooter.classList.toggle("hidden", currentStep !== 2);
+  }
+
+  function validateStep(stepIndex) {
+    if (stepIndex === 0) {
+      if (!validIntro()) {
+        showError("Please fill all required fields in About You.");
+        return false;
+      }
+      if (!isValidWorkEmail()) {
+        showAboutYouError(
+          "Please use your work email. Personal emails like Gmail/Yahoo/Outlook are not allowed.",
+        );
+        return false;
+      }
+      clearAboutYouError();
+      return true;
+    }
+
+    if (stepIndex === 1) {
+      if (!validSite()) {
+        showError("Please fill required fields in About the Warehouse.");
+        return false;
+      }
+      return true;
+    }
+    return true;
   }
 
   function renderQuestions() {
@@ -637,20 +684,20 @@
     });
   }
 
-  if (moreQuestionsBtn) {
-    moreQuestionsBtn.addEventListener("click", () => {
-      optionalPanel.classList.remove("hidden");
-      requiredPanel.classList.add("hidden");
-      if (sectionToggleBar) sectionToggleBar.classList.remove("hidden");
-      setActiveSection("optional");
+  if (nextStepBtn) {
+    nextStepBtn.addEventListener("click", () => {
+      clearError();
+      if (!validateStep(currentStep)) return;
+      if (currentStep < 2) currentStep += 1;
+      renderStep();
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
-  if (backToRequiredBtn) {
-    backToRequiredBtn.addEventListener("click", () => {
-      optionalPanel.classList.add("hidden");
-      requiredPanel.classList.remove("hidden");
-      setActiveSection("required");
+  if (prevStepBtn) {
+    prevStepBtn.addEventListener("click", () => {
+      clearError();
+      if (currentStep > 0) currentStep -= 1;
+      renderStep();
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
@@ -661,7 +708,7 @@
     if (!validIntro())
       return showError("Please fill all required fields in About You.");
     if (!validSite())
-      return showError("Please fill required fields in About the Site.");
+      return showError("Please fill required fields in About the Warehouse.");
     if (!isValidWorkEmail()) {
       showAboutYouError(
         "Please use your work email. Personal emails like Gmail/Yahoo/Outlook are not allowed.",
@@ -758,6 +805,7 @@
   form.addEventListener("input", updateMapsLink);
   form.addEventListener("change", updateMapsLink);
   syncSubmitState();
+  renderStep();
 
   document.addEventListener("click", (e) => {
     const target = e.target;

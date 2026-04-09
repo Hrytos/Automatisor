@@ -51,16 +51,12 @@
         </div>
 
         <form id="newUserForm" novalidate>
-          <div id="sectionToggleBar" class="section-toggle-bar">
-            <button id="backToRequiredBtn" type="button" class="section-toggle-btn is-active">
-              About
-            </button>
-            <button id="moreQuestionsBtn" type="button" class="section-toggle-btn">
-              Answer more questions
-            </button>
+          <div id="stepIndicator" class="step-indicator">
+            Step <span id="stepCurrent">1</span> of 3:
+            <strong id="stepTitle">About You</strong>
           </div>
 
-          <div id="requiredPanel">
+          <div id="aboutYouPanel">
             <div class="signup-section">
               <h2>About You <span class="req-pill">Required</span></h2>
               <div class="signup-grid">
@@ -98,9 +94,11 @@
               </div>
               <p id="aboutYouError" class="form-error hidden"></p>
             </div>
+          </div>
 
+          <div id="aboutWarehousePanel" class="hidden">
             <div class="signup-section">
-              <h2>About the Site <span class="req-pill">Required</span></h2>
+              <h2>About the Warehouse <span class="req-pill">Required</span></h2>
               <div id="mapAddressSection" class="map-address-section hidden">
                 <p class="map-hint">
                   Use your address details to open the location in Google Maps.
@@ -168,7 +166,7 @@
             </div>
           </div>
 
-          <div id="optionalPanel" class="hidden">
+          <div id="answerMorePanel" class="hidden">
             <div class="signup-section">
               <h2>
                 Answer More Questions
@@ -180,11 +178,20 @@
 
           <p id="formError" class="form-error hidden"></p>
 
+          <div class="wizard-nav">
+            <button id="prevStepBtn" type="button" class="btn-secondary hidden">
+              Previous
+            </button>
+            <button id="nextStepBtn" type="button" class="btn-secondary">
+              Next
+            </button>
+          </div>
+
           <div class="signup-footer">
             <p class="signup-note">
               Answering additional questions will further tailor the report to your facility. Are you sure you have answered all that you want to?
             </p>
-            <button id="submitBtn" type="submit" class="btn-primary btn-submit-wide" disabled>
+            <button id="submitBtn" type="submit" class="btn-primary btn-submit-wide hidden" disabled>
               Request a diagnostic report
             </button>
           </div>
@@ -192,7 +199,7 @@
 
         <div id="successPanel" class="success-panel hidden">
           <h2>Congratulations!</h2>
-          <p>Your report will be sent to your mail in 24 hours</p>
+          <p>Your report will be sent to your mail within a business day</p>
         </div>
       </section>
     </main>
