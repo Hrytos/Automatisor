@@ -53,52 +53,12 @@
         <form id="newUserForm" novalidate>
           <div id="stepIndicator" class="step-indicator">
             Step <span id="stepCurrent">1</span> of 3:
-            <strong id="stepTitle">About You</strong>
+            <strong id="stepTitle">About your warehouse</strong>
           </div>
 
-          <div id="aboutYouPanel">
+          <div id="aboutWarehousePanel">
             <div class="signup-section">
-              <h2>About You <span class="req-pill">Required</span></h2>
-              <div class="signup-grid">
-                <input
-                  id="first_name"
-                  placeholder="First name (e.g. John)"
-                  required
-                />
-                <input
-                  id="last_name"
-                  placeholder="Last name (e.g. Smith)"
-                  required
-                />
-                <input
-                  id="company_name"
-                  placeholder="Company name (e.g. Acme Logistics)"
-                  required
-                />
-                <input
-                  id="job_title"
-                  placeholder="Job title (e.g. Operations Manager)"
-                  required
-                />
-                <input
-                  id="company_email"
-                  type="email"
-                  placeholder="Company email (e.g. john@company.com)"
-                  required
-                />
-                <input
-                  id="domain"
-                  placeholder="Domain (e.g. www.company.com)"
-                  required
-                />
-              </div>
-              <p id="aboutYouError" class="form-error hidden"></p>
-            </div>
-          </div>
-
-          <div id="aboutWarehousePanel" class="hidden">
-            <div class="signup-section">
-              <h2>About the Warehouse <span class="req-pill">Required</span></h2>
+              <h2>About your warehouse <span class="req-pill">Required</span></h2>
               <div id="mapAddressSection" class="map-address-section hidden">
                 <p class="map-hint">
                   Use your address details to open the location in Google Maps.
@@ -169,10 +129,50 @@
           <div id="answerMorePanel" class="hidden">
             <div class="signup-section">
               <h2>
-                Answer More Questions
+                Additional questions
                 <span class="optional-pill">Optional</span>
               </h2>
               <div id="questionnaireContainer" class="compact-questions"></div>
+            </div>
+          </div>
+
+          <div id="aboutYouPanel" class="hidden">
+            <div class="signup-section">
+              <h2>About you <span class="req-pill">Required</span></h2>
+              <div class="signup-grid">
+                <input
+                  id="first_name"
+                  placeholder="First name (e.g. John)"
+                  required
+                />
+                <input
+                  id="last_name"
+                  placeholder="Last name (e.g. Smith)"
+                  required
+                />
+                <input
+                  id="company_name"
+                  placeholder="Company name (e.g. Acme Logistics)"
+                  required
+                />
+                <input
+                  id="job_title"
+                  placeholder="Job title (e.g. Operations Manager)"
+                  required
+                />
+                <input
+                  id="company_email"
+                  type="email"
+                  placeholder="Company email (e.g. john@company.com)"
+                  required
+                />
+                <input
+                  id="domain"
+                  placeholder="Domain (e.g. www.company.com)"
+                  required
+                />
+              </div>
+              <p id="aboutYouError" class="form-error hidden"></p>
             </div>
           </div>
 

@@ -9,6 +9,7 @@ const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
 const EMAIL_FROM = "hello@hrytos.com";
+const EVENTS_RUNNER_BASE_URL = process.env.EVENTS_RUNNER_BASE_URL;
 
 app.use(express.json());
 
@@ -66,6 +67,13 @@ function normalizeEmail(raw) {
   return String(raw || "")
     .trim()
     .toLowerCase();
+}
+
+function normalizeNameForMatch(raw) {
+  return String(raw || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
 }
 
 function escapeHtml(s) {
@@ -158,6 +166,7 @@ async function sendSlackNotification({
   contactName,
   email,
   jobTitle,
+  eventJobId,
 }) {
   if (!SLACK_WEBHOOK_URL) {
     console.info("SLACK_WEBHOOK_URL not set — skipping Slack notification");
@@ -216,6 +225,14 @@ async function sendSlackNotification({
           },
         ],
       },
+      ...(eventJobId
+        ? [
+            {
+              type: "section",
+              fields: [{ type: "mrkdwn", text: `*event_job_id*\n${escapeHtml(eventJobId)}` }],
+            },
+          ]
+        : []),
       { type: "divider" },
     ];
 
@@ -230,6 +247,74 @@ async function sendSlackNotification({
       const body = await resp.text().catch(() => "");
       throw new Error(`Slack webhook error ${resp.status}: ${body}`);
     }
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function buildEventsRunnerCommand({
+  companyName,
+  domain,
+  fullAddress,
+  city,
+  state,
+  accountId,
+  siteId,
+}) {
+  const parts = [
+    "python backend/run_events.py",
+    `--company "${String(companyName || "").replace(/"/g, '\\"')}"`,
+    `--domain "${String(domain || "").replace(/"/g, '\\"')}"`,
+    `--address "${String(fullAddress || "").replace(/"/g, '\\"')}"`,
+    `--review-city "${String(city || "").replace(/"/g, '\\"')}"`,
+    `--review-state "${String(state || "").replace(/"/g, '\\"')}"`,
+    `--account-id "${String(accountId || "").replace(/"/g, '\\"')}"`,
+    `--site-id "${String(siteId || "").replace(/"/g, '\\"')}"`,
+  ];
+  return parts.join(" ");
+}
+
+async function triggerEventsRunnerJob({
+  companyName,
+  domain,
+  fullAddress,
+  city,
+  state,
+  accountId,
+  siteId,
+}) {
+  if (!EVENTS_RUNNER_BASE_URL) {
+    console.info("EVENTS_RUNNER_BASE_URL not set — skipping runner trigger");
+    return;
+  }
+  const base = EVENTS_RUNNER_BASE_URL.replace(/\/+$/, "");
+  const command = buildEventsRunnerCommand({
+    companyName,
+    domain,
+    fullAddress,
+    city,
+    state,
+    accountId,
+    siteId,
+  });
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const resp = await fetch(`${base}/run`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ command }),
+      signal: controller.signal,
+    });
+    if (!resp.ok) {
+      const text = await resp.text().catch(() => "");
+      throw new Error(`Events runner error ${resp.status}: ${text}`);
+    }
+    const data = await resp.json().catch(() => ({}));
+    const jobId = data && data.job_id ? String(data.job_id) : null;
+    console.info("Triggered events runner job:", jobId || "unknown");
+    return jobId;
   } finally {
     clearTimeout(timeout);
   }
@@ -496,13 +581,18 @@ app.post("/api/accounts/new-user", async (req, res) => {
       .select("id, account_id, email, first_name, last_name")
       .eq("account_id", accountId)
       .eq("email", companyEmail)
-      .eq("first_name", firstName)
-      .eq("last_name", lastName)
-      .limit(1);
+      .limit(20);
     if (contactLookupErr) throw contactLookupErr;
 
+    const matchedContact = (contactRows || []).find((row) => {
+      return (
+        normalizeNameForMatch(row.first_name) === normalizeNameForMatch(firstName) &&
+        normalizeNameForMatch(row.last_name) === normalizeNameForMatch(lastName)
+      );
+    });
+
     let contactAction = "existing";
-    if (!contactRows || contactRows.length === 0) {
+    if (!matchedContact) {
       // contacts.email is globally unique, so guard duplicate-email case gracefully
       const { data: emailRows, error: emailLookupErr } = await db
         .from("contacts")
@@ -618,6 +708,24 @@ app.post("/api/accounts/new-user", async (req, res) => {
       );
     }
 
+    let eventJobId = null;
+    try {
+      eventJobId = await triggerEventsRunnerJob({
+        companyName,
+        domain,
+        fullAddress,
+        city: body.city,
+        state: body.state,
+        accountId,
+        siteId,
+      });
+    } catch (runnerErr) {
+      console.warn(
+        "Events runner trigger failed:",
+        runnerErr && runnerErr.message ? runnerErr.message : runnerErr,
+      );
+    }
+
     // Send Slack notification (best-effort; do not block signup success)
     try {
       await sendSlackNotification({
@@ -626,6 +734,7 @@ app.post("/api/accounts/new-user", async (req, res) => {
         contactName: `${firstName} ${lastName}`.trim(),
         email: companyEmail,
         jobTitle,
+        eventJobId,
       });
     } catch (slackErr) {
       console.warn(

@@ -18,7 +18,11 @@
   const signupIntro = document.getElementById("signupIntro");
   const signupPageTitle = document.getElementById("signupPageTitle");
   const mapsPreviewLink = document.getElementById("mapsPreviewLink");
-  const stepTitles = ["About You", "About the Warehouse", "Answer More Questions"];
+  const stepTitles = [
+    "About your warehouse",
+    "Additional questions",
+    "About you",
+  ];
   let currentStep = 0;
 
   const answers = {};
@@ -472,10 +476,10 @@
   }
 
   function renderStep() {
-    if (aboutYouPanel) aboutYouPanel.classList.toggle("hidden", currentStep !== 0);
     if (aboutWarehousePanel)
-      aboutWarehousePanel.classList.toggle("hidden", currentStep !== 1);
-    if (answerMorePanel) answerMorePanel.classList.toggle("hidden", currentStep !== 2);
+      aboutWarehousePanel.classList.toggle("hidden", currentStep !== 0);
+    if (answerMorePanel) answerMorePanel.classList.toggle("hidden", currentStep !== 1);
+    if (aboutYouPanel) aboutYouPanel.classList.toggle("hidden", currentStep !== 2);
 
     if (stepCurrentEl) stepCurrentEl.textContent = String(currentStep + 1);
     if (stepTitleEl) stepTitleEl.textContent = stepTitles[currentStep];
@@ -488,27 +492,17 @@
 
   function validateStep(stepIndex) {
     if (stepIndex === 0) {
-      if (!validIntro()) {
-        showError("Please fill all required fields in About You.");
+      if (!validSite()) {
+        showError("Please fill required fields in About your warehouse.");
         return false;
       }
-      if (!isValidWorkEmail()) {
-        showAboutYouError(
-          "Please use your work email. Personal emails like Gmail/Yahoo/Outlook are not allowed.",
-        );
-        return false;
-      }
-      clearAboutYouError();
       return true;
     }
 
     if (stepIndex === 1) {
-      if (!validSite()) {
-        showError("Please fill required fields in About the Warehouse.");
-        return false;
-      }
       return true;
     }
+
     return true;
   }
 
@@ -704,11 +698,12 @@
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (currentStep !== 2) return;
     clearError();
     if (!validIntro())
-      return showError("Please fill all required fields in About You.");
+      return showError("Please fill all required fields in About you.");
     if (!validSite())
-      return showError("Please fill required fields in About the Warehouse.");
+      return showError("Please fill required fields in About your warehouse.");
     if (!isValidWorkEmail()) {
       showAboutYouError(
         "Please use your work email. Personal emails like Gmail/Yahoo/Outlook are not allowed.",
